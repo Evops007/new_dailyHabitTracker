@@ -1,9 +1,8 @@
 @import "tailwindcss";
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@plugin "daisyui"{
+  themes: nord --default, dark --night;
 }
+
 
 @theme inline {
   --color-background: var(--background);
@@ -12,15 +11,35 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  overscroll-behavior: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation; 
+}
+
+h1 {
+  @apply text-6xl font-semibold text-primary;
+}
+
+h2 {
+  @apply text-4xl font-semibold;
+}
+
+h3 {
+  @apply text-3xl font-medium;
+}
+
+h4 {
+  @apply text-2xl font-medium;
+}
+
+h5 {
+  @apply text-xl font-semibold;
+}
+
+h6 {
+  @apply text-lg font-semibold;
 }

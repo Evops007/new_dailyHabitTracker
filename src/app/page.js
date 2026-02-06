@@ -1,65 +1,71 @@
-import Image from "next/image";
+import { auth, signIn, signOut } from "@/auth";
+import { createHabit, getHabits, updateHabit, deleteHabit, toggleHabit } from "@/actions/habit-action";
+import HabitCard from "@/components/habits/HabitCard";
+import { AddHabit } from "@/components/habits/AddHabit";
+import HabitList from "@/components/habits/HabitList";
 
-export default function Home() {
+export default async function Home() {
+  const session = await auth();
+  const habits = session ? await getHabits() : [];
+
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.js file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div className="min-h-screen bg-base-200 p-4">
+      {session ? (
+        <div className="max-w-md mx-auto space-y-6">
+          
+          {/* Header */}
+          <div className="flex justify-between items-center">
+            <div>
+              <h1 className="text-2xl font-bold">Hei, {session.user.name} 👋</h1>
+              <p className="text-sm opacity-70">Klar for dagens vaner?</p>
+            </div>
+            <div className="avatar">
+               <div className="w-10 rounded-full">
+                 {session.user.image && <img src={session.user.image} alt="Avatar" />}
+               </div>
+            </div>
+          </div>
+
+          <div className="space-y-3">
+            <HabitList habits={habits} />
+          </div>
+
+          {/* Her skal vi sette inn HabitList / HabitCard senere */}
+          {/* <div className="space-y-3">
+            {habits.map((habit) => (
+                <HabitCard key={habit.id} habit={habit} />
+            ))}
+          </div>
+          <div>
+            <AddHabit />
+          </div>*/}
+
+          {/* Logg ut knapp (midlertidig plassert bunn) */}
+          <form
+            action={async () => {
+              "use server";
+              await signOut();
+            }}
+            className="text-center mt-10">
+            <button className="btn btn-ghost btn-xs text-error">Logg ut</button>
+          </form>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+      ) : (
+        /* Login Screen */
+        <div className="flex flex-col items-center justify-center min-h-[80vh] gap-6">
+          <h1 className="text-4xl font-bold text-primary">Habit Tracker</h1>
+          <p>Aldri glem vanene dine</p>
+          <form
+            action={async () => {
+              "use server";
+              await signIn("google");
+            }}
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+            <button className="btn btn-primary btn-wide">Logg inn med Google</button>
+          </form>
         </div>
-      </main>
+      )}
     </div>
   );
 }
