@@ -37,7 +37,7 @@ export async function getHabits() {
         throw new Error("Du må være logget inn for å legge til vaner.");
     }
 
-    const habits = prisma.habit.findMany({
+    const habits = await prisma.habit.findMany({
         where: {
             userId: session.user.id
         },
@@ -52,14 +52,14 @@ export async function getHabits() {
     return habits
 }
 
-export async function updateHabit(formData) {
+export async function updateHabit(habitData) {
     const session = await auth();
     if (!session?.user?.id) {
         throw new Error("Du må være logget inn for å legge til vaner.");
     }
 
-    const habitId = formData.get("habitId");
-    const newTitle = formData.get("title")
+    const habitId = habitData.id;
+    const newTitle = habitData.title;
 
     try {
         await prisma.habit.updateMany({
@@ -71,6 +71,8 @@ export async function updateHabit(formData) {
                 title: newTitle
             }
         });
+        revalidatePath("/");
+        return { success: true };
     }
 
     catch(error) {
