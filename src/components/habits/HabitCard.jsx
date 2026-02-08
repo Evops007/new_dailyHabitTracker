@@ -1,12 +1,20 @@
 "use client"
 import { deleteHabit, toggleHabit, updateHabit } from "@/actions/habit-action";
-import { startTransition, useRef, useState } from "react";
+import { startTransition, useEffect, useRef, useState } from "react";
 
 
 export function HabitCard({ habit, onDelete, onEdit, onToggle }) {
 
     const [currentHabitTitle, setCurrentHabitTitle] = useState(habit.title)
     const editModalRef = useRef(null)
+    const isDoneToday = habit.logs?.some(l => 
+        new Date(l.completedDate).toDateString() === new Date().toDateString()
+    );
+    const [checked, setChecked] = useState(isDoneToday)
+    useEffect(() => {
+        setChecked(isDoneToday);
+    }, [isDoneToday]);
+
     
     async function handleDelete() { 
         startTransition(() => {
@@ -26,21 +34,35 @@ export function HabitCard({ habit, onDelete, onEdit, onToggle }) {
             onEdit({type: 'edit', habitToEdit})
         });
         
-        editModalRef.current.close();   
+        editModalRef.current.close(); 
         await updateHabit(habitToEdit)
     };
+
+    function handleToggle() {
+        const newStaus = !checked;
+        setChecked(newStaus)
+        startTransition(() => {
+            onToggle({ type: 'toggle', habit });
+        });
+
+        toggleHabit(habit.id, new Date().toISOString());
+    }
     
     return (
         <>
             <div>
-                <p>{habit.title}</p>
-                <button className="btn btn-error" onClick={handleDelete}>X</button>
-                <input
-                    type="checkbox"
-                    className="checkbox border-gray bg-gray-300 checked:border-secoundary checked:bg-secondary checked:text-secoundary"
-                />  
-                <div>
+                <div className={isDoneToday ? "bg-gray-300" : ""}>
+                    <h6>{habit.title}</h6>
+                    <button className="btn btn-error" onClick={handleDelete}>X</button>
+                    <input
+                        type="checkbox"
+                        className="checkbox border-gray bg-gray-300 checked:border-secoundary checked:bg-secondary checked:text-secoundary "
+                        onChange={handleToggle}
+                        checked={checked}
+                    />
                     <button className="btn btn-accent" onClick={()=> editModalRef.current.showModal() }>Rediger vane</button>
+                </div>
+                <div>
                     <dialog ref={editModalRef} className="modal modal-bottom sm:modal-middle">
                         <div className="modal-box min-h-95/100">
                             <h2>Rediger vane</h2>
