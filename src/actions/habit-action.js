@@ -12,11 +12,13 @@ export async function createHabit(formData) {
     }
 
     const title = formData.get("title")
+    const icon = formData.get("icon")
 
     try {
         await prisma.habit.create({
             data: {
                 title: title,
+                icon: icon || "✨",
                 userId: session.user.id
             },
         });
@@ -25,7 +27,7 @@ export async function createHabit(formData) {
         return { success: true };
     }
 
-    catch(error) {
+    catch (error) {
         console.error("feil ved oppretting av vane:", error)
         return { success: false, error: "klarte ikke lagre vanen" }
     }
@@ -60,6 +62,7 @@ export async function updateHabit(habitData) {
 
     const habitId = habitData.id;
     const newTitle = habitData.title;
+    const newIcon = habitData.icon;
 
     try {
         await prisma.habit.updateMany({
@@ -68,14 +71,15 @@ export async function updateHabit(habitData) {
                 userId: session.user.id
             },
             data: {
-                title: newTitle
+                title: newTitle,
+                icon: newIcon || "✨"
             }
         });
         revalidatePath("/");
         return { success: true };
     }
 
-    catch(error) {
+    catch (error) {
         console.error("feil ved oppdatering av vane:", error)
         return { success: false, error: "klarte ikke oppdatere vanen" }
     }
@@ -100,7 +104,7 @@ export async function deleteHabit(habitId) {
         return { success: true };
     }
 
-    catch(error) {
+    catch (error) {
         console.error("feil ved sletting av vane:", error)
         return { success: false, error: "klarte ikke slette vanen" }
     }
@@ -114,6 +118,18 @@ export async function toggleHabit(habitId, dateString) {
     const targetDate = new Date(dateString);
     targetDate.setHours(0, 0, 0, 0);
 
+    // Sjekk at vanen tilhører brukeren (IDOR protection)
+    const habit = await prisma.habit.findUnique({
+        where: {
+            id: habitId,
+            userId: session.user.id
+        }
+    });
+
+    if (!habit) {
+        throw new Error("Ingen tilgang til denne vanen.");
+    }
+
     const exsistingLog = await prisma.habitLog.findUnique({
         where: {
             habitId_completedDate: {
@@ -122,9 +138,9 @@ export async function toggleHabit(habitId, dateString) {
             }
         }
     });
-    
+
     try {
-        if(exsistingLog) {
+        if (exsistingLog) {
             await prisma.habitLog.delete({
                 where: {
                     id: exsistingLog.id
@@ -143,7 +159,7 @@ export async function toggleHabit(habitId, dateString) {
         return { success: true };
     }
 
-    catch(error) {
+    catch (error) {
         console.error("Feil ved fullføring av oppgave:", error);
         return { success: false };
     }

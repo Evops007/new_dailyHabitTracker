@@ -60,6 +60,7 @@ model Habit {
   userId      String
   title       String
   description String?
+  icon        String?  @default("✨")
   color       String?  @default("#FF0000") // Hex code
   logs        HabitLog[]
   
