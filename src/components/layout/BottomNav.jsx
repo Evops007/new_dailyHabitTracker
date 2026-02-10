@@ -4,7 +4,7 @@ import { signOut } from "next-auth/react";
 
 export default function BottomNav() {
     return (
-        <div className="dock fixed  left-1/2 -translate-x-1/2 z-50 bg-base-100/90 backdrop-blur-md border border-base-200 rounded-tr-2xl rounded-tl-2xl shadow-xl px-4 py-2 gap-4">
+        <div className="dock fixed  left-1/2 -translate-x-1/2 z-50 bg-base-100 backdrop-blur-md border border-base-100 shadow-xl px-4 py-2 gap-4">
 
             {/* 1. Statistikk (Venstre) - Placeholder */}
             <button

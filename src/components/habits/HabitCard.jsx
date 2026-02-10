@@ -110,7 +110,7 @@ export function HabitCard({ habit, onDelete, onEdit, onToggle, selectedDate }) {
 
                 <input
                     type="checkbox"
-                    className="checkbox border-gray bg-gray-300 checked:border-secoundary checked:bg-secondary/70 checked:text-secoundary"
+                    className="checkbox border-gray bg-gray-200 checked:border-secoundary checked:bg-secondary/70 checked:text-secoundary"
                     onChange={handleToggle}
                     checked={checked}
                     // Stopp drag når man trykker på checkbox

@@ -20,7 +20,7 @@ export default async function Home() {
 
 
   return (
-    <div className="min-h-screen bg-base-content p-4 pb-24">
+    <div className="min-h-screen bg-base-200 p-4 pb-24">
       {session ? (
         <div className="max-w-md mx-auto space-y-6">
           <HabitList habits={habits} userCreatedAt={user?.createdAt} />
@@ -31,8 +31,8 @@ export default async function Home() {
         /* Login Screen */
         <div className="flex flex-col items-center justify-center min-h-[80vh] gap-6 px-12 text-center">
           <div className="space-y-2">
-            <h1 className="text-5xl! font-black tracking-tighter text-neutral-content!">Habit Tracker</h1>
-            <p className="text-neutral-content">Få kontroll på hverdagen</p>
+            <h1 className="text-5xl! font-black tracking-tighter text-neutral!">Habit Tracker</h1>
+            <p className="text-neutral">Få kontroll på hverdagen</p>
           </div>
 
           <form
