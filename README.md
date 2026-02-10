@@ -13,11 +13,14 @@ Applikasjonen lar brukere logge inn sikkert, opprette personlige vaner med emoji
 *   **Modern Dock Navigasjon:** En lekker og responsiv meny nederst på skjermen som gir rask tilgang til alle hovedfunksjoner.
 *   **Statistikk & Streaks:** Hold motivasjonen oppe med oversikt over antall vaner fullført i snitt pr. dag og din "Perfect Day Streak" (antall dager på rad alle vaner er gjort).
 <img src="screenshots/HabitTracker_Screenshot%20(5).png" width="231">
+
 *   **Progressive Web App (PWA):** Kan installeres på hjemskjermen og kjøres i fullskjerm-modus uten nettleser-ramme.
 *   **Swipe-gestures:** Intuitive "swipe-to-reveal" handlinger for redigering og sletting av vaner (laget med Framer Motion).
 <img src="screenshots/HabitTracker_Screenshot (2).png" width="231"> &nbsp; &nbsp; <img src="screenshots/HabitTracker_Screenshot%20(3).png" width="231">
+
 *   **Autentisering:** Sikker innlogging med Google (NextAuth.js v5).
 <img src="screenshots/HabitTracker_Screenshot (6).png" width="231">
+
 *   **Optimistisk UI:** Umiddelbar respons på brukerhandlinger før serveren bekrefter, for en lynrask opplevelse.
 *   **Kalendernavigasjon:** Egendefinert datovelger for å se historikk og planlegge fremtiden.
 
