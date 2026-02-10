@@ -49,7 +49,11 @@ export function HabitCard({ habit, onDelete, onEdit, onToggle, selectedDate }) {
             onToggle({ type: 'toggle', habit, selectedDate });
         });
 
-        toggleHabit(habit.id, selectedDate.toISOString());
+        const localDateStr = selectedDate.getFullYear() + '-' +
+            String(selectedDate.getMonth() + 1).padStart(2, '0') + '-' +
+            String(selectedDate.getDate()).padStart(2, '0');
+
+        toggleHabit(habit.id, localDateStr);
     }
 
     // Framer Motion Values
@@ -131,11 +135,7 @@ export function HabitCard({ habit, onDelete, onEdit, onToggle, selectedDate }) {
                             </div>
                         </div>
 
-                        {/* --Kode til "daglig varsel"--
-                                    <p className="font-semibold">Fra og med</p>
-                                    <DayPicker captionLayout="" mode="single" navLayout="around" startMonth={thisDate} timeZone="Europe/Oslo" locale={nb} selected={selected} onSelect={setSelected} />*/}
-
-                        <button type="submit" className="btn btn-primary w-full">Lagre</button>
+                        <button type="submit" className="btn bg-primary-content text-neutral-content w-full">Lagre</button>
                     </form>
                 </div>
             </dialog>

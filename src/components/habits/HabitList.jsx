@@ -21,16 +21,26 @@ export default function HabitList({ habits, userCreatedAt }) {
                     return currentHabits.map(habit => habit.id === habitAction.habitToEdit.id ? habitAction.habitToEdit : habit);
 
                 case 'toggle':
-                    const targetDateStr = habitAction.selectedDate.toDateString(); // <--- Bruk valgt dato!
+                    const targetDateStr = habitAction.selectedDate.toDateString();
                     return currentHabits.map(h => {
                         if (h.id !== habitAction.habit.id) return h;
                         const currentLogs = h.logs || [];
-                        const isAlreadyDone = currentLogs.some(l => new Date(l.completedDate).toDateString() === targetDateStr);
+                        const isAlreadyDone = currentLogs.some(l => {
+                            const d = new Date(l.completedDate);
+                            return d.toDateString() === targetDateStr;
+                        });
+
+                        // Generer en UTC midnatt dato for optimistisk logg
+                        const year = habitAction.selectedDate.getFullYear();
+                        const month = String(habitAction.selectedDate.getMonth() + 1).padStart(2, '0');
+                        const day = String(habitAction.selectedDate.getDate()).padStart(2, '0');
+                        const utcMidnight = `${year}-${month}-${day}T00:00:00.000Z`;
+
                         return {
                             ...h,
                             logs: isAlreadyDone
                                 ? currentLogs.filter(l => new Date(l.completedDate).toDateString() !== targetDateStr)
-                                : [...currentLogs, { id: 'temp-' + Date.now(), completedDate: habitAction.selectedDate.toISOString() }]
+                                : [...currentLogs, { id: 'temp-' + Date.now(), completedDate: utcMidnight }]
                         };
                     });
 
