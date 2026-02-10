@@ -1,7 +1,7 @@
 # Daglig Vane Tracker / Daily Habit Tracker 📅
 
-![Hjemmskjerm for daglige vaner](screenshots/HabitTracker_Screenshot.png)
-![Hjemmskjerm for daglige vaner](screenshots/HabitTracker_Screenshot%20(1).png)
+![Hjemmskjerm for daglige vaner](screenshots/HabitTracker_Screenshot.png | width=201)
+![Hjemmskjerm for daglige vaner](screenshots/HabitTracker_Screenshot%20(1).png | width=201)
 
 
 ## 🇳🇴 Norsk
@@ -14,12 +14,12 @@ Applikasjonen lar brukere logge inn sikkert, opprette personlige vaner med emoji
 *   **Mobil-optimalisert UI:** Designet fra bunnen av for å føles som en app på telefonen.
 *   **Modern Dock Navigasjon:** En lekker og responsiv meny nederst på skjermen som gir rask tilgang til alle hovedfunksjoner.
 *   **Statistikk & Streaks:** Hold motivasjonen oppe med oversikt over antall vaner fullført i snitt pr. dag og din "Perfect Day Streak" (antall dager på rad alle vaner er gjort).
-![Hjemmskjerm for daglige vaner](screenshots/HabitTracker_Screenshot%20(5).png)
+![Hjemmskjerm for daglige vaner](screenshots/HabitTracker_Screenshot%20(5).png | width=201)
 *   **Progressive Web App (PWA):** Kan installeres på hjemskjermen og kjøres i fullskjerm-modus uten nettleser-ramme.
 *   **Swipe-gestures:** Intuitive "swipe-to-reveal" handlinger for redigering og sletting av vaner (laget med Framer Motion).
-![Hjemmskjerm for daglige vaner](screenshots/HabitTracker_Screenshot%20(2).png) ![Hjemmskjerm for daglige vaner](screenshots/HabitTracker_Screenshot%20(3).png)
+![Hjemmskjerm for daglige vaner](screenshots/HabitTracker_Screenshot%20(2).png | width=201) ![Hjemmskjerm for daglige vaner](screenshots/HabitTracker_Screenshot%20(3).png | width=201)
 *   **Autentisering:** Sikker innlogging med Google (NextAuth.js v5).
-![Hjemmskjerm for daglige vaner](screenshots/HabitTracker_Screenshot%20(6).png)
+![Hjemmskjerm for daglige vaner](screenshots/HabitTracker_Screenshot%20(6).png | width=201)
 *   **Optimistisk UI:** Umiddelbar respons på brukerhandlinger før serveren bekrefter, for en lynrask opplevelse.
 *   **Kalendernavigasjon:** Egendefinert datovelger for å se historikk og planlegge fremtiden.
 
